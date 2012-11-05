@@ -37,6 +37,7 @@ package
             ninja.x = spawn.x;
             ninja.y = spawn.y;
             add(ninja);
+            add(ninja.sword);
 
             FlxG.camera.follow(ninja, FlxCamera.STYLE_PLATFORMER)
         }
