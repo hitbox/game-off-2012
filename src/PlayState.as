@@ -5,10 +5,13 @@ package
 
     public class PlayState extends FlxState
     {
-        public var level:FlxTilemap;
-        public var player:FlxSprite;
+        [Embed(source="../assets/level1.png")] public var level1PNG:Class;
+        [Embed(source="../assets/level2.png")] public var level2PNG:Class;
+
+        public var ninja:Ninja;
         public var spawn:FlxSprite;
         public var exit:FlxSprite;
+        public var level:FlxTilemap;
 
         override public function create():void
         {
@@ -17,7 +20,7 @@ package
 
             level = new FlxTilemap();
             // NOTE: autotilemap is 8x8 tiles
-            level.loadMap(FlxTilemap.imageToCSV(levelDict["levelPNG"]),
+            level.loadMap(FlxTilemap.imageToCSV(level1PNG),
                           FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
             FlxG.worldBounds = level.getBounds();
             add(level);
@@ -30,34 +33,21 @@ package
             exit.makeGraphic(8, 16, 0xff0000ff);
             add(exit);
 
-            player = new FlxSprite(FlxG.width / 2 - 5);
-            player.x = spawn.x;
-            player.y = spawn.y;
-            player.makeGraphic(10, 12, 0xffaa1111);
-            player.maxVelocity.x = 120;
-            player.maxVelocity.y = 400;
-            player.acceleration.y = 400;
-            player.drag.x = player.maxVelocity.x*4;
-            add(player);
+            ninja = new Ninja();
+            ninja.x = spawn.x;
+            ninja.y = spawn.y;
+            add(ninja);
 
-            FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER)
+            FlxG.camera.follow(ninja, FlxCamera.STYLE_PLATFORMER)
         }
 
         override public function update():void
         {
-            player.acceleration.x = 0;
-            if(FlxG.keys.LEFT)
-                player.acceleration.x = -player.maxVelocity.x*4;
-            if(FlxG.keys.RIGHT)
-                player.acceleration.x = player.maxVelocity.x*4;
-            if(FlxG.keys.justPressed("UP") && player.isTouching(FlxObject.FLOOR))
-                player.velocity.y = -player.maxVelocity.y / 2;
-
             super.update();
 
-            FlxG.collide(level, player);
+            FlxG.collide(level, ninja);
 
-            if(FlxG.overlap(exit, player)) {
+            if(FlxG.overlap(exit, ninja)) {
                 FlxG.switchState(new PlayState);
             }
         }
