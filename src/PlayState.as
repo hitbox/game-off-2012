@@ -5,24 +5,28 @@ package
 
     public class PlayState extends FlxState
     {
-        [Embed(source="../assets/level1.png")] public var level1PNG:Class;
         [Embed(source="../assets/level2.png")] public var level2PNG:Class;
 
         public var ninja:Ninja;
         public var spawn:FlxSprite;
         public var exit:FlxSprite;
-        public var level:FlxTilemap;
+        public var level:Level;
+
+        public var currentLevel:Level;
 
         override public function create():void
         {
-            var levelDict:Dictionary;
-            levelDict = FlxG.levels[FlxG.level];
+            FlxG.levels[0] = Level1;
+            FlxG.levels[1] = Level2;
+            FlxG.level = 0;
+            initLevel();
+        }
 
-            level = new FlxTilemap();
-            // NOTE: autotilemap is 8x8 tiles
-            level.loadMap(FlxTilemap.imageToCSV(level1PNG),
-                          FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
-            FlxG.worldBounds = level.getBounds();
+        public function initLevel():void
+        {
+            clear();
+
+            level = new FlxG.levels[FlxG.level]();
             add(level);
 
             spawn = new FlxSprite(8 * 3, 8 * 27);
@@ -46,10 +50,11 @@ package
         {
             super.update();
 
-            FlxG.collide(level, ninja);
+            FlxG.collide(level.tilemap, ninja);
 
             if(FlxG.overlap(exit, ninja)) {
-                FlxG.switchState(new PlayState);
+                FlxG.level = (FlxG.level + 1) % FlxG.levels.length;
+                initLevel();
             }
         }
     }
