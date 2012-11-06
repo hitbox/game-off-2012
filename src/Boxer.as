@@ -7,7 +7,7 @@ package
         public function Boxer(X:Number=0, Y:Number=0)
         {
             super(X,Y);
-            makeGraphic(10, 12, 0xffff0000);
+            makeGraphic(8, 8, 0xffff0000);
         }
 
         override public function update():void

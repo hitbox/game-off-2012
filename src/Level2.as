@@ -28,7 +28,7 @@ package
             spawn.makeGraphic(8, 8, 0xff00ff00);
             add(spawn);
 
-            exit = new FlxSprite(117 * 8, 27 * 8)
+            exit = new FlxSprite(118 * 8, 7 * 8)
             exit.makeGraphic(8, 16, 0xff0000ff);
             add(exit);
         }
