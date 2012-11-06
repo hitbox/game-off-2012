@@ -32,6 +32,7 @@ package
             add(ninja.sword);
 
             FlxG.camera.follow(ninja, FlxCamera.STYLE_PLATFORMER)
+            FlxG.camera.bounds = FlxG.worldBounds;
         }
 
         public function overlapBaddies(o1:FlxObject, o2:FlxObject):void
