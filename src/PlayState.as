@@ -8,8 +8,6 @@ package
         [Embed(source="../assets/level2.png")] public var level2PNG:Class;
 
         public var ninja:Ninja;
-        public var spawn:FlxSprite;
-        public var exit:FlxSprite;
         public var level:Level;
 
         public var currentLevel:Level;
@@ -29,17 +27,9 @@ package
             level = new FlxG.levels[FlxG.level]();
             add(level);
 
-            spawn = new FlxSprite(8 * 3, 8 * 27);
-            spawn.makeGraphic(8, 16, 0xff00ff00);
-            add(spawn);
-
-            exit = new FlxSprite(8 * 38, 8 * 1);
-            exit.makeGraphic(8, 16, 0xff0000ff);
-            add(exit);
-
             ninja = new Ninja();
-            ninja.x = spawn.x;
-            ninja.y = spawn.y;
+            ninja.x = level.spawn.x;
+            ninja.y = level.spawn.y;
             add(ninja);
             add(ninja.sword);
 
@@ -52,7 +42,15 @@ package
 
             FlxG.collide(level.tilemap, ninja);
 
-            if(FlxG.overlap(exit, ninja)) {
+            if(level.instantDeath) {
+                if(FlxG.collide(level.instantDeath, ninja))
+                {
+                    FlxG.camera.flash();
+                    initLevel();
+                }
+            }
+
+            if(FlxG.overlap(level.exit, ninja)) {
                 FlxG.level = (FlxG.level + 1) % FlxG.levels.length;
                 initLevel();
             }
