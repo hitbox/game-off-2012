@@ -8,6 +8,7 @@ package
         public var instantDeath:FlxTilemap;
         public var spawn:FlxSprite;
         public var exit:FlxSprite;
+        public var baddies:FlxGroup;
 
         public function Level()
         {

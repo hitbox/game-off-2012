@@ -5,8 +5,6 @@ package
 
     public class PlayState extends FlxState
     {
-        [Embed(source="../assets/level2.png")] public var level2PNG:Class;
-
         public var ninja:Ninja;
         public var level:Level;
 
@@ -36,6 +34,11 @@ package
             FlxG.camera.follow(ninja, FlxCamera.STYLE_PLATFORMER)
         }
 
+        public function overlapBaddies(o1:FlxObject, o2:FlxObject):void
+        {
+            o2.kill();
+        }
+
         override public function update():void
         {
             super.update();
@@ -48,6 +51,17 @@ package
                     FlxG.camera.flash();
                     initLevel();
                 }
+            }
+
+            if(FlxG.overlap(ninja, level.baddies))
+            {
+                // you dead
+                initLevel();
+            }
+
+            if(ninja.sword._attackframe > 0) 
+            {
+                FlxG.overlap(ninja.sword, level.baddies, overlapBaddies)
             }
 
             if(FlxG.overlap(level.exit, ninja)) {

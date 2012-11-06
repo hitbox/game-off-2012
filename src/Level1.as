@@ -26,6 +26,16 @@ package
             exit.makeGraphic(8, 16, 0xff0000ff);
             add(exit);
 
+            baddies = new FlxGroup();
+            baddies.add(new Boxer(17 * 8, 27 * 8))
+            baddies.add(new Boxer(18 * 8, 19 * 8))
+            baddies.add(new Boxer(28 * 8, 6 * 8))
+
+            var i:uint = 0;
+            while(i < baddies.length)
+            {
+                add(baddies.members[i++]);
+            }
         }
     }
 }
