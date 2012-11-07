@@ -16,7 +16,7 @@ package
             acceleration.y = 400;
             drag.x = maxVelocity.x*4;
 
-            sword = new Sword(this)
+            sword = new Sword(this);
 
             jumpFrame = 0;
         }

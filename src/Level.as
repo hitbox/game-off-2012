@@ -12,6 +12,7 @@ package
 
         public function Level()
         {
+            super();
             tilemap = null;
         }
     }

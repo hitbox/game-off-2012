@@ -1,14 +1,11 @@
 package
 {
-    import flash.utils.Dictionary;
     import org.flixel.*;
 
     public class PlayState extends FlxState
     {
         public var ninja:Ninja;
         public var level:Level;
-
-        public var currentLevel:Level;
 
         override public function create():void
         {
@@ -21,11 +18,12 @@ package
         public function initLevel():void
         {
             clear();
+            
+            ninja = new Ninja();
 
-            level = new FlxG.levels[FlxG.level]();
+            level = new FlxG.levels[FlxG.level](ninja);
             add(level);
 
-            ninja = new Ninja();
             ninja.x = level.spawn.x;
             ninja.y = level.spawn.y;
             add(ninja);
@@ -44,9 +42,17 @@ package
         {
             super.update();
 
-            FlxG.collide(level.tilemap, ninja);
+            if(FlxG.keys.justPressed("F1"))
+            {
+                FlxG.debug = !FlxG.debug;
+                FlxG.visualDebug = !FlxG.visualDebug;
+            }
 
-            if(level.instantDeath) {
+            FlxG.collide(level.tilemap, ninja);
+            FlxG.collide(level.tilemap, level.baddies);
+
+            if(level.instantDeath) 
+            {
                 if(FlxG.collide(level.instantDeath, ninja))
                 {
                     FlxG.camera.flash();
@@ -65,7 +71,8 @@ package
                 FlxG.overlap(ninja.sword, level.baddies, overlapBaddies)
             }
 
-            if(FlxG.overlap(level.exit, ninja)) {
+            if(FlxG.overlap(level.exit, ninja)) 
+            {
                 FlxG.level = (FlxG.level + 1) % FlxG.levels.length;
                 initLevel();
             }

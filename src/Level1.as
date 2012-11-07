@@ -6,7 +6,7 @@ package
     {
         [Embed(source="../assets/level1.png")] public var tilemapPNG:Class;
 
-        public function Level1()
+        public function Level1(ninja:Ninja)
         {
             super();
 
@@ -27,14 +27,15 @@ package
             add(exit);
 
             baddies = new FlxGroup();
-            baddies.add(new Boxer(17 * 8, 27 * 8))
-            baddies.add(new Boxer(18 * 8, 19 * 8))
-            baddies.add(new Boxer(28 * 8, 6 * 8))
-
+            baddies.add(new WalkerDude(ninja, 17 * 8, 27 * 8));
+            baddies.add(new WalkerDude(ninja, 18 * 8, 19 * 8));
+            baddies.add(new WalkerDude(ninja, 28 * 8, 6 * 8));
+            
             var i:uint = 0;
             while(i < baddies.length)
             {
-                add(baddies.members[i++]);
+                add(baddies.members[i]);
+                i++;
             }
         }
     }

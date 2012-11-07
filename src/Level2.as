@@ -8,7 +8,7 @@ package
         [Embed(source="../assets/level2-instant-death.png")] public var instantDeathPNG:Class;
         [Embed(source="../assets/level2-autotiles.png")] public var autotilesPNG:Class;
 
-        public function Level2()
+        public function Level2(target:FlxObject=null)
         {
             super();
 
