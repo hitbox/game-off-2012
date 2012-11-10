@@ -9,8 +9,9 @@ package
 
         override public function create():void
         {
-            FlxG.levels[0] = Level1;
-            FlxG.levels[1] = Level2;
+            FlxG.levels[1] = Level1;
+            FlxG.levels[2] = Level2;
+            FlxG.levels[0] = LevelTestClimbing;
             FlxG.level = 0;
             initLevel();
         }
@@ -19,10 +20,11 @@ package
         {
             clear();
             
-            ninja = new Ninja();
-
-            level = new FlxG.levels[FlxG.level](ninja);
+            level = new FlxG.levels[FlxG.level]();
             add(level);
+
+            ninja = new Ninja(level);
+            level.ninja = ninja;
 
             ninja.x = level.spawn.x;
             ninja.y = level.spawn.y;
@@ -46,6 +48,12 @@ package
             {
                 FlxG.debug = !FlxG.debug;
                 FlxG.visualDebug = !FlxG.visualDebug;
+            }
+            if(FlxG.keys.justPressed("F2"))
+            {
+                FlxG.level = (FlxG.level + 1) % FlxG.levels.length;
+                initLevel();
+                return
             }
 
             FlxG.collide(level.tilemap, ninja);

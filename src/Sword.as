@@ -30,11 +30,28 @@ package
             }
             visible = _attackframe > 0;
 
-            if(_ninja.facing == RIGHT) {
+            var ninja_facing:uint = _ninja.facing;
+            if(_ninja.climbing)
+            {
+                if(ninja_facing == RIGHT)
+                {
+                    ninja_facing = LEFT;
+                }
+                else
+                {
+                    ninja_facing = RIGHT;
+                }
+            }
+
+            if(ninja_facing == RIGHT) 
+            {
                 x = _ninja.x + _ninja.width;
-            } else {
+            } 
+            else
+            {
                 x = _ninja.x - width;
             }
+
             y = _ninja.y;
 
             super.update();
